@@ -131,11 +131,12 @@ export const useOrders = () => {
     try {
       // Try Edge Function first (bypasses RLS safely via service role)
       try {
-        const res = await fetch(`${(supabase as any).rest.url.replace('/rest/v1','')}/functions/v1/update-order-status`, {
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const res = await fetch(`${supabaseUrl}/functions/v1/update-order-status`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('sb-access-token') || localStorage.getItem('supabase.auth.token') || ''}`,
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
           },
           body: JSON.stringify({ orderId, newStatus: status }),
         });

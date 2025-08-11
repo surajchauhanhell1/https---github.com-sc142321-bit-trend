@@ -131,12 +131,16 @@ export const useOrders = () => {
     try {
       // Try Edge Function first (bypasses RLS safely via service role)
       try {
+        // Get the current session token for proper authentication
+        const { data: { session } } = await supabase.auth.getSession();
+        const authToken = session?.access_token;
+        
         const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
         const res = await fetch(`${supabaseUrl}/functions/v1/update-order-status`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+            'Authorization': authToken ? `Bearer ${authToken}` : `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
           },
           body: JSON.stringify({ orderId, newStatus: status }),
         });

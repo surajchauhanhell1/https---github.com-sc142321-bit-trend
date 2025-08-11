@@ -72,9 +72,16 @@ const AdminDashboard = () => {
   const handleStatusUpdate = async (orderId: string, newStatus: string) => {
     const success = await updateOrderStatus(orderId, newStatus);
     if (success) {
-      toast({ title: 'Order Updated', description: 'Order status has been updated successfully.' });
+      toast({ 
+        title: 'Order Updated', 
+        description: `Order status has been updated to ${newStatus}.` 
+      });
     } else {
-      toast({ title: 'Update failed', description: 'Could not update order status. Please try again.', variant: 'destructive' });
+      toast({ 
+        title: 'Update Failed', 
+        description: 'Could not update order status. Please try again.', 
+        variant: 'destructive' 
+      });
     }
   };
 

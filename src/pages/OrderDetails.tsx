@@ -164,6 +164,11 @@ const OrderDetails = () => {
                   <p className="text-muted-foreground">
                     Placed on {formatDate(order.created_at)} at {formatTime(order.created_at)}
                   </p>
+                  {order.status === 'cancelled' && (
+                    <p className="text-red-600 font-medium mt-2">
+                      Order Cancelled
+                    </p>
+                  )}
                 </div>
                 <Badge className={`${getStatusColor(order.status)} text-white capitalize`}>
                   {order.status}

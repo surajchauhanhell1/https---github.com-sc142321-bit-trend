@@ -129,9 +129,19 @@ const MyOrders = () => {
 
                     {/* Estimated Delivery */}
                     <div className="mb-4">
-                      <p className="text-green-600 font-medium">
-                        Estimated Delivery: {getEstimatedDelivery(order.created_at, order.status)}
-                      </p>
+                      {order.status === 'cancelled' ? (
+                        <p className="text-red-600 font-medium">
+                          Order Cancelled
+                        </p>
+                      ) : order.status === 'delivered' ? (
+                        <p className="text-green-600 font-medium">
+                          Order Delivered on {formatDate(order.delivered_date || order.updated_at)}
+                        </p>
+                      ) : (
+                        <p className="text-green-600 font-medium">
+                          Estimated Delivery: {getEstimatedDelivery(order.created_at, order.status)}
+                        </p>
+                      )}
                     </div>
 
                     {/* Status Badge */}

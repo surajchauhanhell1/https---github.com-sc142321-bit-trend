@@ -23,7 +23,7 @@ export const useAdmin = () => {
           .select('role')
           .eq('user_id', user.id)
           .eq('role', 'admin')
-          .single();
+          .maybeSingle();
 
         console.log('Admin check result:', { data, error });
 
